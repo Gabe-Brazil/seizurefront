@@ -7,7 +7,6 @@ import Account from './Pages/Account'
 import Statistics from "./Pages/Statistics"
 import Auth from './Components/Auth';
 import { Toaster } from "react-hot-toast"
-import { createContext } from 'react';
 import MedicationCalendar from './Pages/MedicationCalendar';
 function App() {
   const [user,setUser]=useState({
@@ -26,7 +25,7 @@ function App() {
       setUser({...user,isLogIn:true})
     }
 
-  },[])
+  })
 
   return (
     <div className="App">

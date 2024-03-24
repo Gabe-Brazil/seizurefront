@@ -9,9 +9,9 @@ export const generateDataSeries = (
   mode = GRAPH_MODE.AVERAGE_PER_DAY,
   domain = "YEAR"
 ) => {
-  if (domain == "YEAR") {
+  if (domain === "YEAR") {
     return generateDataSeries_YEAR(data,start_date, mode);
-  } else if (domain == "MONTH") {
+  } else if (domain === "MONTH") {
     return generateDataSeries_MONTH(data,start_date, mode);
   }
 };
@@ -23,7 +23,7 @@ export const generateDataSeries = (
 
 function generateDataSeries_YEAR(data,start_date, mode = GRAPH_MODE.AVERAGE_PER_DAY) {
   const startDate = new Date(start_date);
-  startDate .setDate(startDate .getDate() + 1);
+  startDate.setDate(startDate.getDate() + 1);
   const dataSeries = [];
 
   for (let i = 0; i < 365; i++) {
@@ -44,18 +44,18 @@ function generateDataSeries_YEAR(data,start_date, mode = GRAPH_MODE.AVERAGE_PER_
       szDate.setMinutes(0);
       szDate.setSeconds(0);
       szDate.setMilliseconds(0);
-      return szDate.getTime() == date.getTime();
+      return szDate.getTime() === date.getTime();
     })
 
    let value = 0;
-    if (mode == GRAPH_MODE.AVERAGE_PER_DAY) {
+    if (mode === GRAPH_MODE.AVERAGE_PER_DAY) {
       for (let el of dateSe) {
         value += el.LengthOfSz;
       }
       if (dateSe.length > 0) {
         value = value / dateSe.length;
       }
-    } else if (mode == GRAPH_MODE.FREQ_PER_DAY) {
+    } else if (mode === GRAPH_MODE.FREQ_PER_DAY) {
       value = dateSe.length;
     }
     
@@ -85,7 +85,7 @@ function generateDataSeries_YEAR(data,start_date, mode = GRAPH_MODE.AVERAGE_PER_
 
 function generateDataSeries_MONTH(data,start_date, mode = GRAPH_MODE.AVERAGE_PER_DAY) {
     const startDate = new Date(start_date);
-    startDate .setDate(startDate .getDate() + 1);
+    startDate.setDate(startDate.getDate() + 1);
     const dataSeries = [];
 
   /*  function daysInMonth (month, year) { // Use 1 for January, 2 for February, etc.
@@ -110,18 +110,18 @@ function generateDataSeries_MONTH(data,start_date, mode = GRAPH_MODE.AVERAGE_PER
         szDate.setMinutes(0);
         szDate.setSeconds(0);
         szDate.setMilliseconds(0);
-        return szDate.getTime() == date.getTime();
+        return szDate.getTime() === date.getTime();
       });
   
       let value = 0;
-      if (mode == GRAPH_MODE.AVERAGE_PER_DAY) {
+      if (mode === GRAPH_MODE.AVERAGE_PER_DAY) {
         for (let el of dateSe) {
           value += el.LengthOfSz;
         }
         if (dateSe.length > 0) {
           value = value / dateSe.length;
         }
-      } else if (mode == GRAPH_MODE.FREQ_PER_DAY) {
+      } else if (mode === GRAPH_MODE.FREQ_PER_DAY) {
         value = dateSe.length;
       }
       dataSeries.push([date.getTime()+1000*60*60*25123, value]); 

@@ -2,9 +2,8 @@ import React from "react";
 import { signIn } from "../API/Auth";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { Navigate, useNavigate } from "react-router-dom";
 
-export default function ({ switchForm, user, setUser }) {
+function Loginform ({ switchForm, user, setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,7 +57,7 @@ export default function ({ switchForm, user, setUser }) {
             </button>
           </div>
           <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
+            Forgot password? ADD IN THE FUTURE
           </p>
           <p>
             Don't have an account Sign up{" "}
@@ -71,3 +70,4 @@ export default function ({ switchForm, user, setUser }) {
     </div>
   );
 }
+export default Loginform;
