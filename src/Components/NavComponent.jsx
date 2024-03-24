@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {useState} from "react"
@@ -30,16 +29,16 @@ function NavbarComponent({user,setUser}){
         <Nav className="me-auto">
           <Link 
           onClick={()=>{setActive(1)}}
-          className={active==1?"active-link":""} style={styles.link}  to="/">Input Seizure</Link>
+          className={active===1?"active-link":""} style={styles.link}  to="/">Input Seizure</Link>
           <Link 
           onClick={()=>{setActive(2)}}
-          className={active==2?"active-link":""} style={styles.link}  to="/medication">Medication Timeline</Link>
+          className={active===2?"active-link":""} style={styles.link}  to="/medication">Medication Timeline</Link>
           <Link
             onClick={()=>{setActive(3)}}
-          className={active==3?"active-link":""} style={styles.link}  to="/stats">Statistics</Link>
+          className={active===3?"active-link":""} style={styles.link}  to="/stats">Statistics</Link>
           <Link
             onClick={()=>{setActive(4)}}
-          className={active==4?"active-link":""} style={styles.link}  to="/acc">Account</Link>
+          className={active===4?"active-link":""} style={styles.link}  to="/acc">Account</Link>
         </Nav>
         
         {user&& user.isLogIn && <Button onClick={()=>{
