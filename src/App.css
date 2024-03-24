@@ -1,38 +1,139 @@
-.App {
-  text-align: center;
-}
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.time-input {
+    display: flex;
+    align-items: center;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  .time-input__hour,
+  .time-input__minute {
+    width: 60px !important; 
   }
-  to {
-    transform: rotate(360deg);
+  
+  .time-input__separator {
+    margin: 0 0.5rem;
   }
-}
+
+  .time-input__ampm {
+    margin-left: 0.5rem;
+    width: 50px;
+  }
+
+  .active-link{
+    background-color:rgba(128, 128, 128, 0.1);
+    padding:2px;
+    border-radius:10px;
+  }
+
+  
+  .Auth-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .Auth-form {
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    background-color: white;
+  }
+  
+  .Auth-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+  
+  .Auth-form-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(34, 34, 34);
+  }
+
+  /* Input Board */
+ .anim_gradient{
+  
+  width:100%;
+ }
+  .input-board-container {
+ 
+    display: flex;
+    height: 60vh; /* 100% of the viewport height */
+    gap:100px;
+    align-items:  end;
+    justify-content: center;
+  }
+  
+  .ib-left-side {
+    
+    display:flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+  }
+  
+  .panicButton{
+    
+    height:200px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttonIcon{
+    
+    display:flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding:10px;
+  }
+  .buttonIcon h1{
+    text-align: end;
+    width:100%;
+  }
+  .buttonAnimation{
+    
+    width:fit-content;
+  }
+
+  .anim_gradient {
+    z-index: -5;
+    position:absolute;
+    height: 95.9%;
+    /* background: linear-gradient(135deg, hsla(331, 78%, 69%, 1) 0%, hsla(238, 82%, 70%, 1) 100%);*/
+    background: linear-gradient(135deg, hsla(217, 5%, 83%) 0%, hsla(216, 0%, 43%) 100%);
+            animation : "gradient 2s ease infinite";
+        }
+          
+    @keyframes gradient {
+      0% {
+          background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    };

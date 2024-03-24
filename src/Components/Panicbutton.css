@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+#button {
+  height: 130px;
+   max-width: 15%; 
+}
+
+#button div {
+  position: absolute;
+  transition:all .2s;
+}
+
+#floor {
+  height: 50px;
+  width: 300px;
+  background: #34495e;
+  border-radius: 50%;
+  margin-top: 80px;
+  margin-left:-20px;
+  z-index: -1;
+}
+
+#top {
+  background: #e74c3c;
+  height: 40px;
+  width: 250px;
+  border-radius: 50%;
+  z-index: 1;
+  margin-left: 0px;
+  position: relative;
+}
+
+#bottom {
+  background: #c0392b;
+  height: 40px;
+  width: 250px;
+  border-radius: 50%;
+  margin-top: 80px;
+  margin-left: 0px;
+  position: relative;
+}
+
+#bodybutton {
+  background: #c0392b;
+  width: 250px;
+  border-radius: 0;
+  margin-left: 0px;
+  position: relative;
+}
+
+.bodybutton {
+  height: 80px;
+  margin-top: 2ch;
+}
+
+#button:hover {
+  cursor: pointer;
+}
+
+.top-click {
+  margin-top: 40px;
+  
+} 
+
+.bodybutton-click  {
+  height: 40px;
+  margin-top: 60px;
+} 
+
+#button:hover #floor{
+ background: #95a5a6;
+} 
+

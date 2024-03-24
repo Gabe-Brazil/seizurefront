@@ -1,0 +1,46 @@
+.nav-tabs .nav-link {
+    color: #000; /* Change to your desired color */
+  }
+  
+  /* Selected tab text color */
+  .nav-tabs .nav-link.active {
+    color: white; /* Bootstrap's default primary color */
+  }
+
+  .tab-content {
+    padding: 20px; /* Adjust the value as needed */
+  }
+  
+  /* Adjust the padding of the tab nav */
+  .nav-tabs {
+    padding: 5px 0; /* Adjust the values as needed */
+  }
+
+  .tab-title .header{
+    display:flex;
+    justify-content: flex-end;
+  }
+   .tab-title{
+    margin:0px;
+    padding:0px;
+    width:100px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+   }
+   .tab-title .body{
+    width:95%;
+   }
+  .tab-title .header .close{
+    font-size:10px;
+    border-radius:1000px;
+    transition: 0.5s;
+    padding:3px;
+    opacity: 0.4;
+  }
+
+  .tab-title .header .close:hover{
+    background-color: rgba(159, 0, 0, 0.1);
+    opacity: 0.8;
+  }
+ 
