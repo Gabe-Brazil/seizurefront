@@ -25,7 +25,7 @@ function App() {
       setUser({...user,isLogIn:true})
     }
 
-  })
+  }, [])
 
   return (
     <div className="App">

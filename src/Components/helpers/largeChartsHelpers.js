@@ -1,169 +1,98 @@
-/*
-
-
-*/
+import moment from "moment";
+import { getFirstDate, getLastDate } from "../../API/Graph";
 
 export const generateDataSeries = (
   data,
   start_date,
-  mode = GRAPH_MODE.AVERAGE_PER_DAY,
-  domain = "YEAR"
+  end_date,
+  mode,
+  domain = "ALL" 
 ) => {
-  if (domain === "YEAR") {
-    return generateDataSeries_YEAR(data,start_date, mode);
-  } else if (domain === "MONTH") {
-    return generateDataSeries_MONTH(data,start_date, mode);
+  switch (domain) {
+    case "ALL":
+      return generateDataSeries_ALL(data, start_date, end_date, mode);
+    // Domain is developmental for now
+    default:
+      break;
   }
 };
 
-/*
+function generateDataSeries_ALL(data, start_date, end_date, mode) {
 
-
-*/
-
-function generateDataSeries_YEAR(data,start_date, mode = GRAPH_MODE.AVERAGE_PER_DAY) {
-  const startDate = new Date(start_date);
-  startDate.setDate(startDate.getDate() + 1);
-  const dataSeries = [];
-
-  for (let i = 0; i < 365; i++) {
-    // LEAP YEARS ALSO EXIST
-
-    const date = new Date(startDate);
-
-    date.setDate(startDate.getDate() + i);
-
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-   date.setMilliseconds(0);
-
-    let dateSe = data.filter((item) => {
-      const szDate = new Date(item.TimeOfSz);
-      szDate.setHours(0);
-      szDate.setMinutes(0);
-      szDate.setSeconds(0);
-      szDate.setMilliseconds(0);
-      return szDate.getTime() === date.getTime();
-    })
-
-   let value = 0;
-    if (mode === GRAPH_MODE.AVERAGE_PER_DAY) {
-      for (let el of dateSe) {
-        value += el.LengthOfSz;
+  const START_DATE = start_date ? moment(start_date) : moment(getFirstDate().TimeOfSz)
+  const END_DATE = end_date ? moment(end_date) : moment(getLastDate().TimeOfSz)
+  const DATASERIES = [];
+  let iterations = END_DATE.diff(START_DATE, 'days') + 1; //Number of days between start and end
+  //console.log(iterations)
+console.log(typeof mode, mode)
+  switch (mode) {
+  case '1':
+    for (let i = 0; i <= iterations; i++){
+      let current_date = moment(start_date).add(i, 'days');
+      if (data.some(item => moment(item.TimeOfSz, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD') === current_date.format('YYYY-MM-DD'))) {
+        getAverageLengthPerDay(current_date,data,DATASERIES);
+      }else{
+        DATASERIES.push([Date.parse(moment(current_date._d).format("YYYY-MM-DD")),0])
       }
-      if (dateSe.length > 0) {
-        value = value / dateSe.length;
+    }
+    return DATASERIES;
+  case '2':
+    for (let i=0; i<=iterations; i++){
+      let current_date = moment(start_date).add(i, 'days');
+      if (data.some(item => moment(item.TimeOfSz, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD') === current_date.format('YYYY-MM-DD'))) {
+        
+        getNumberPerDay(current_date,data,DATASERIES);
+      }else{
+        DATASERIES.push([Date.parse(moment(current_date._d).format("YYYY-MM-DD")),0])
       }
-    } else if (mode === GRAPH_MODE.FREQ_PER_DAY) {
-      value = dateSe.length;
     }
-    
-    
-    //dataSeries.push([date.getTime() /*- date.getTime()%(24*60*60*1000) *//*remove any remaining hours*/, value]); // Replace Math.random() with your actual data value
-    
-    for(let el of dateSe){
-      let date=new Date(el.TimeOfSz);
-      date.setHours(0)
-      date.setMinutes(0)
-      date.setSeconds(0)
-      date.setMilliseconds(0)
-      dataSeries.push([date.getTime() - date.getTime()%(24*60*60*1000), value]);
-    }
-    console.log(dataSeries)
-  
+
+    return DATASERIES;
+  default:
+    break;
   }
-  
-
-  return dataSeries;
 }
 
-/*
+function getAverageLengthPerDay(current_date, data, DATASERIES) {
+  let totalLength = 0;
+  let count = 0;
 
-
-*/
-
-function generateDataSeries_MONTH(data,start_date, mode = GRAPH_MODE.AVERAGE_PER_DAY) {
-    const startDate = new Date(start_date);
-    startDate.setDate(startDate.getDate() + 1);
-    const dataSeries = [];
-
-  /*  function daysInMonth (month, year) { // Use 1 for January, 2 for February, etc.
-  return new Date(year, month, 0).getDate();} */
-
-  
-    for (let i = 0; i < 31; i++) { // Depends on the month (28 - 31)
-    
-  
-      const date = new Date(startDate);
-  
-      date.setDate(startDate.getDate() + i);
-  
-      date.setHours(0);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
-  
-      let dateSe = data.filter((item) => {
-        const szDate = new Date(item.TimeOfSz);
-        szDate.setHours(0);
-        szDate.setMinutes(0);
-        szDate.setSeconds(0);
-        szDate.setMilliseconds(0);
-        return szDate.getTime() === date.getTime();
-      });
-  
-      let value = 0;
-      if (mode === GRAPH_MODE.AVERAGE_PER_DAY) {
-        for (let el of dateSe) {
-          value += el.LengthOfSz;
-        }
-        if (dateSe.length > 0) {
-          value = value / dateSe.length;
-        }
-      } else if (mode === GRAPH_MODE.FREQ_PER_DAY) {
-        value = dateSe.length;
-      }
-      dataSeries.push([date.getTime()+1000*60*60*25123, value]); 
+  for (let record of data) {
+    const recordDate = moment(record.TimeOfSz, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+    if (recordDate === current_date.format('YYYY-MM-DD')) {
+      totalLength += record.LengthOfSz;
+      count++;
     }
-  
-    return dataSeries;
-
-
-  
+  }
+  let average = (totalLength / count).toFixed(2); // OLD JS ROUNDING
+  DATASERIES.push([Date.parse(moment(current_date._d).format("YYYY-MM-DD")),parseInt(average)])
 }
 
-/*
+function getNumberPerDay(current_date, data, DATASERIES) {
+  let count =0;
 
+  for (let record of data) {
+    const recordDate = moment(record.TimeOfSz, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+    if (recordDate === current_date.format('YYYY-MM-DD')) {
+      count++;
+    }
+  }
 
-*/
+  DATASERIES.push([Date.parse(moment(current_date._d).format("YYYY-MM-DD")), count]);
+
+}
 
 export const generateTitle = (params) => {
-  return `${getMonthFromNumber(params.startdate)} ${
-    params.startdate.split("-")[0]
+  
+  return `${getMonthFromNumber(parseInt(params.start_date.split("-")[1]))} ${
+    params.start_date.split("-")[0]
   } to 
-    ${getMonthFromNumber(calculateEnddate(params.startdate, params.domain))} ${
-    calculateEnddate(params.startdate, params.domain).split("-")[0]
+    ${getMonthFromNumber(parseInt(params.end_date.split("-")[1]))} ${
+    (params.end_date).split("-")[0]
   }`;
 };
 
-/*
-
-
-*/
-
-export const GRAPH_MODE = {
-  AVERAGE_PER_DAY: 1, /// Average Length per day
-  FREQ_PER_DAY: 2, /// Number of seizures per day
-};
-
-/*
-
-
-*/
-
 export const getMonthFromNumber = (number) => {
-  const integerValue = Number(number.split("-")[1]);
   const months = [
     "January",
     "February",
@@ -179,34 +108,9 @@ export const getMonthFromNumber = (number) => {
     "December",
   ];
 
-  if (integerValue >= 1 && integerValue <= 12) {
-    return months[integerValue - 1];
+  if (number >= 1 && number <= 12) {
+    return months[number - 1];
   } else {
     return "Invalid month number";
-  }
-};
-
-/*
-
-
-*/
-
-export const calculateEnddate = (startdate, domain) => {
-  startdate = startdate.split("-");
-  if (domain === "YEAR") {
-    startdate[0] = Number(startdate[0]) + 1;
-    return startdate.join("-");
-  }
-
-  if (domain === "MONTH") {
-    if (Number(startdate[1]) !== 12) {
-      startdate[1] = Number(startdate[1]) + 1;
-      return startdate.join("-");
-    } else {
-      startdate[0] = Number(startdate[0]) + 1;
-      startdate[1] = Number(startdate[1]) - 11;
-      console.log(startdate);
-      return startdate.join("-");
-    }
   }
 };

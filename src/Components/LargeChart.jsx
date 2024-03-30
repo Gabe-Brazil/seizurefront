@@ -4,7 +4,6 @@ import { getGraphData } from "../API/Graph.js";
 import { useEffect, useState } from "react";
 import Chartform from "./Chartform.jsx";
 
-import { GRAPH_MODE } from "./helpers/largeChartsHelpers.js";
 import {
   generateDataSeries,
   generateTitle,
@@ -13,8 +12,6 @@ import {
 
 const defaultOptions={
   chart: {
-
-         
     zoomType: 'x'
   }
 
@@ -25,21 +22,7 @@ const defaultOptions={
         align: 'left'
   },
   xAxis: {
-    events: {
-     /* afterSetExtremes: function(e) {
-
-      if((e.max-e.min)/(60*60*1000*24*360)>0.9){
-        //alert("Zoom out")
-        ///setState()
-      }
-        
-      }*/
-  },
     type: "datetime",
-    /* dateTimeLabelFormats: {
-      month: "%b", // Display abbreviated month names
-    } ,
-    tickInterval: 30 * 24 * 3600 * 1000, // One month in milliseconds */
   },
   yAxis: {
     title: {
@@ -84,11 +67,13 @@ const styles={
 
 
 function LargeChart() {
+  const [defaultDates, setDefaultDates] = useState(["2020-01-01","2020-12-31"]);
+
   const [options, setOptions] = useState(null);
   const [params, setParams] = useState({
-    startdate: "2024-01-01",
-    domain: "YEAR",
-    mode: GRAPH_MODE.AVERAGE_PER_DAY,
+    start_date: defaultDates[0],
+    end_date: defaultDates[1],
+    mode: '1',
   });
 
   useEffect(() => {
@@ -100,41 +85,44 @@ function LargeChart() {
       let data = await getGraphData(params);
       if (data === undefined || data.length === 0) data = [0];
 
-      setOptions({
-      ...defaultOptions,  /// is the default options good?
-      title: {
-        // Start date TO end date
-        text: generateTitle(params),
-        align: 'left'
-       },
-        series: [{            ///why series is an array? can we draw Yearly series and Month series within the array?
-            type: 'area',
-            name: params.mode === '1' ? 'Average Length of Seizure' : 'Number of Seizures',
-            data: generateDataSeries(
-              data,
-              params.startdate,
-              params ? params.mode : 1,
-              params.domain
-            ),
-          },
-                {
-            type: 'line',
-            name: 'Highlighted Range',
-            data: [
+              setOptions({
+              ...defaultOptions,  
+              title: {
+                // Start date TO end date
+                text: generateTitle(params),
+                align: 'left'
+              },
+                series: [
                   {
-                    x: Date.UTC(2024, 2, 10), // 2024-02-10
-                    y: 0, // Adjust the y-value as needed
+                    type: 'area',
+                    name: params.mode === '1' ? 'Average Length of Seizure per Day' : 'Number of Seizures per Day',
+                    data: generateDataSeries(
+                      data,
+                      params.start_date,
+                      params.end_date,
+                      params.mode,
+                     
+                    ),
                   },
+                  /*
                   {
-                    x: Date.UTC(2024, 3, 28), // 2024-02-28
-                    y: 0, // Adjust the y-value as needed
-                  },
+                    type: 'line',
+                    name: 'Highlighted Range',
+                    data: [
+                          {
+                            x: Date.UTC(2024, 2, 10), 
+                            y: 0,
+                          },
+                          {
+                            x: Date.UTC(2024, 6, 22), 
+                            y: 0, 
+                          },
+                        ],
+                    color: 'red', 
+                    lineWidth: 2, 
+                  },*/
                 ],
-            color: 'red', // Customize the line color
-            lineWidth: 2, // Customize the line width
-          },
-        ],
-      });
+              });
     } catch (error) {
       console.error("Error loading records:", error);
     }
@@ -156,4 +144,5 @@ Highcharts.addEvent(Highcharts.Point, 'click', function () {
     
   alert("click")
 
-});*/
+});
+*/
