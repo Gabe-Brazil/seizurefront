@@ -165,6 +165,8 @@ function InputForm() {
           >
             <option value="Tonic">Tonic Seizure</option>
             <option value="Tonic_Clonic">Tonic Clonic Seizure</option>
+            <option value="Limb_Stiffening">Limb Stiffening</option>
+            <option value="Shaking">Shaking</option>
             <option value="Focal">Focal Seizure</option>
             <option value="Other">Other</option>
           </Form.Select>
