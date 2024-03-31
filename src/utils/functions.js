@@ -2,7 +2,7 @@ export const generateId=()=>{
     return Math.floor(Math.random()*10000000000000)
 }
 
-export const compileRecord = ({duration,hours,mins, dayTime, type, date, features, fromPanic})=>{
+export const compileRecord = ({duration,durationseconds,hours,mins, dayTime, type, date, features, fromPanic})=>{
 let result = {};
 
 if(dayTime==="PM" && hours!== '12'){ //Converts PM into 24 hour time
@@ -14,7 +14,7 @@ hours = 0;
 
 result.TimeOfSz= date + " " + hours + ":" + mins + ":00";
 result.TypeOfSz= type;
-result.LengthOfSz= duration;
+result.LengthOfSz= duration+durationseconds/60;
 result.FeaturesOfSz= features;
 result.fromPanic= fromPanic;
 console.log(result)

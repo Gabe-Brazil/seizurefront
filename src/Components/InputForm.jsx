@@ -7,6 +7,7 @@ import { compileRecord } from "../utils/functions";
 
 const initialState = { // make it the current time if current time setting is enabled
   duration: "",
+  durationseconds: "",
   hours: "",
   mins: "",
   dayTime: "AM",
@@ -132,15 +133,26 @@ function InputForm() {
         </div>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label> Length of Seizure </Form.Label>
+        <Form.Label> Length of Seizure </Form.Label>
+          <div className="time-input">
           <Form.Control
             as="input"
             name="duration"
             value={state.duration}
             onInput={handleChange}
-            placeholder="Duration (in minutes)"
+            placeholder="minutes"
             className="duration"
           />
+          <span style={{ width: "150%" }} />
+          <Form.Control
+            as="input"
+            name="durationseconds"
+            value={state.durationseconds}
+            onInput={handleChange}
+            placeholder="seconds"
+            className="duration"
+          />
+          </div>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
