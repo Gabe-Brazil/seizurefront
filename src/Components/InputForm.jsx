@@ -163,11 +163,14 @@ function InputForm() {
             onChange={handleChange}
             className="type-input__ampm"
           >
-            <option value="Tonic">Tonic Seizure</option>
-            <option value="Tonic_Clonic">Tonic Clonic Seizure</option>
-            <option value="Limb_Stiffening">Limb Stiffening</option>
+            <option value="Absence">Absence</option>
+            <option value="Tonic">Tonic</option>
+            <option value="Tonic_Clonic">Tonic Clonic</option>
             <option value="Shaking">Shaking</option>
-            <option value="Focal">Focal Seizure</option>
+            <option value="Staring">Staring</option>
+            <option value="Staring_With_Jerking">Staring With Jerking</option>
+            <option value="Limb_Stiffening">Limb Stiffening</option>
+            <option value="Focal">Focal</option>
             <option value="Other">Other</option>
           </Form.Select>
         </div>
