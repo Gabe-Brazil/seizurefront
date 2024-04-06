@@ -9,7 +9,7 @@ export const addRecord=async(data)=>{
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
-    console.log(headers)
+  
       await axios.post(process.env.REACT_APP_SERVER_URL+"/records/",data,{headers});
 
   }catch(err){
@@ -18,7 +18,7 @@ export const addRecord=async(data)=>{
 } 
 
 // '4' is the collumn number (Timestamp)
- export const getRecords = async (params={offset:0,dir:"ASC", order:4}) => {
+ export const getRecords = async (params={offset:0,dir:"ASC", order:1}) => {
   try {
     const token = window.localStorage.getItem("token");
     const headers = {
@@ -34,7 +34,7 @@ export const addRecord=async(data)=>{
   }
 };
 
-export const updateRecords = async (id,updatedRecords) => {
+export const updateRecord = async (Id,data) => {
   try {
     // Allows user to change any aspect of a row
     const token = window.localStorage.getItem("token");
@@ -42,8 +42,9 @@ export const updateRecords = async (id,updatedRecords) => {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
     };
-
-    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "/records/"+ id, updatedRecords, { headers });
+      
+   
+    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "/records/"+ Id,data, { headers });
     
     return response //may need to work on the return of update and delete function, MAYBE it doesnt matter and immediate effects will be frontend only
 

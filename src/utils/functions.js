@@ -14,13 +14,48 @@ hours = 0;
 
 result.TimeOfSz= date + " " + hours + ":" + mins + ":00";
 result.TypeOfSz= type;
-result.LengthOfSz= duration+durationseconds/60;
+result.LengthOfSz= duration*60+durationseconds*1; //Length of Sz now in seconds
 result.FeaturesOfSz= features;
 result.fromPanic= fromPanic;
-console.log(result)
+
 return result
-    
 }
+
+export const decompileRecord=({FeaturesOfSz,LengthOfSz,TimeOfSz,TypeOfSz,Id})=>{
+
+TimeOfSz=TimeOfSz.split(" ")
+
+let date=TimeOfSz[0]
+let time=TimeOfSz[1].split(":")
+let hours = time[0]
+let mins = time[1]
+let dayTime=getAMPM(hours)
+let duration=Math.floor(LengthOfSz/60) 
+let durationseconds= (1*LengthOfSz-duration*60);
+let features=FeaturesOfSz
+let type=TypeOfSz
+
+
+return {
+  date,
+  hours,
+  mins,
+  dayTime,
+  duration,
+  durationseconds,
+  features,
+  type,
+  Id
+  }
+
+}
+
+
+export const getAMPM = (hour) => {
+  let hours = parseInt(hour);
+
+  return hours >= 12 ? 'PM' : 'AM';
+};
 
 export const compileMixture = ()=>{
 

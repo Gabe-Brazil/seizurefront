@@ -1,9 +1,9 @@
 import Table from 'react-bootstrap/Table';
-import toast from 'react-hot-toast';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { useState, useEffect } from 'react';
-import { getRecords, updateRecords, deleteRecord } from '../API/Record';
-const DELETEICONSRC="https://cdn-icons-png.flaticon.com/512/3405/3405244.png"
+import { getRecords } from '../API/Record';
+import {  decompileRecord} from "../utils/functions";
+import UpdateRecordForm from './UpdateRecordForm';
 const ID_COLUMN_WIDTH=50
 
 // TODO: Make a system to clean up table, Add an 'updating/editing feature'
@@ -13,13 +13,27 @@ const [rows,setRows]=useState([]);
 const [params,setParams]=useState({
   offset:0,dir:"ASC", order:6
 });
-
 const [lastClicked,setLastClicked]=useState(null);
+const [showForm, setShowForm] = useState(false);
+const [selectedRecord, setSelectedRecord] = useState([]);
 
 useEffect(()=>{
 loadRecords()
-console.log(params)
+
 },[params])
+
+useEffect(() => {
+  document.body.addEventListener('click', handleBodyClick);
+  return () => {
+    document.body.removeEventListener('click', handleBodyClick);
+  };
+}, []);
+
+function handleBodyClick(event) {
+  if (!event.target.closest('table')) {
+    setLastClicked(null); // Reset lastClicked when user clicks off the table
+  }
+}
 
 const loadRecords = async () => {
     try {
@@ -30,21 +44,12 @@ const loadRecords = async () => {
     }
 }
 
-const handleDelete = async (id) => {
-  try {
-    toast.promise(deleteRecord(id), {
-      loading: "Deleting...",
-      success: "Record deleted!",
-      error: "Error deleting record",
-    });
 
-    await loadRecords();
-  } catch (error) {
-    console.error("Error handling delete:", error);
-    // Handle any additional error handling or display a generic error message
-    toast.error("An error occurred while deleting the record");
-  }
-};
+function handleRowClick(record){
+  setSelectedRecord(decompileRecord(record));
+  setShowForm(true);
+}
+
 
 
   ///console.log(rows);
@@ -64,7 +69,9 @@ setParams({...params,offset:params.offset+10});
 }
 
 const previousPage =()=> {
+  if(params.offset>0){
   setParams({...params,offset:params.offset-10}); 
+  }
 }
 
 const handleHeaderClick =(index)=> {
@@ -79,9 +86,12 @@ if(index===lastClicked){
 setLastClicked(index);
 }
 
- // Review the UID appearing from replit.
+ 
     return (
       <div> 
+        <button onClick={previousPage} > 10 back </button>
+        <button onClick={nextPage}> 10 forward </button>
+        {showForm && <UpdateRecordForm loadRecords={loadRecords} data = { selectedRecord} onClose={() => setShowForm(false)} />}
       <Table style={{border:"1px solid black",height:"100px",width:"80%",margin:"auto",marginTop:"20px"}} striped bordered hover>
         <thead>
           <tr>
@@ -91,30 +101,24 @@ setLastClicked(index);
               }
               return <th  key={head}> <button style={{borderColor:index===lastClicked?"red":"black"}} onClick={()=> {handleHeaderClick(index)}}> {head} </button></th> // change color based on direction
             })}
-            {rows && rows.length>0 && <th style={{textAlign:"center"}}> Delete Row</th>}
+            
          
           </tr>
         </thead>
         <tbody>
           {rows && rows.length>0 && rows.map((row,row_number)=>{
-         return <tr>
+         return <tr key={row_number} onClick={() => handleRowClick(row)}>
             {row && Object.keys(row).map((columnName,col_number)=>{
               if(col_number===0){
                 return <td>{row_number+1+params.offset}</td>
               }
               return <td  >{row[columnName]}</td>
             })}
-            {row && <div><img alt="delete" onClick={()=>{handleDelete(row["Id"])}} src={DELETEICONSRC} style={{width:30,display:"block",margin:"auto"}}/></div>}
+            
          </tr>
           })}
         </tbody>
       </Table>
-    {/*https://www.npmjs.com/package/react-paginate ADD PAGINATION TO THE TABLE */}
-
-      <button onClick={previousPage} > 10 back </button>
-      <span style={{color: 'black'}}> {params.offset} </span>
-      <button onClick={nextPage}> 10 forward </button>
-
 
       </div>
     );

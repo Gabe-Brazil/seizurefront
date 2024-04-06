@@ -36,6 +36,8 @@ export const signIn = async (email, password) => {
   }
 };
 
+// Non-Auth related user functions below
+
 export const getDetails = async () => {
     try {
       const token = window.localStorage.getItem("token");
@@ -51,3 +53,5 @@ export const getDetails = async () => {
       throw error;
     }
   };
+
+  
