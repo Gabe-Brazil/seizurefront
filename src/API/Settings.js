@@ -16,14 +16,15 @@ export const getSettings = async ()=>{
 }
 
 export const updateSettings = async (params)=>{
-  // ALL AT ONCE
+  
   try {
     const token = window.localStorage.getItem("token");
     const headers = {
       Authorization: `Bearer ${token}`
     };
     
-    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "/settings", { headers,params });
+    
+    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "/settings",params ,{ headers });
     
     return response;
   } catch (error) {

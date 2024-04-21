@@ -60,11 +60,10 @@ export const getAMPM = (hour) => {
 
 export const getDates = async () => {
   let settings = await getSettings();
-  console.log(settings)
   if(settings && settings.length > 0 && settings[0].defaultStartDate && settings[0].defaultEndDate){
     return [settings[0].defaultStartDate, settings[0].defaultEndDate];
   }
-  return["2024-10-10","2024-11-11"];
+  return["2024-01-01","2024-12-31"];
 };
 
 export const compileMixture = ()=>{
