@@ -1,6 +1,8 @@
+import { getSettings } from "../API/Settings";
+
 export const generateId=()=>{
     return Math.floor(Math.random()*10000000000000)
-}
+};
 
 export const compileRecord = ({duration,durationseconds,hours,mins, dayTime, type, date, features, fromPanic})=>{
 let result = {};
@@ -19,7 +21,7 @@ result.FeaturesOfSz= features;
 result.fromPanic= fromPanic;
 
 return result
-}
+};
 
 export const decompileRecord=({FeaturesOfSz,LengthOfSz,TimeOfSz,TypeOfSz,Id})=>{
 
@@ -48,8 +50,7 @@ return {
   Id
   }
 
-}
-
+};
 
 export const getAMPM = (hour) => {
   let hours = parseInt(hour);
@@ -57,10 +58,19 @@ export const getAMPM = (hour) => {
   return hours >= 12 ? 'PM' : 'AM';
 };
 
+export const getDates = async () => {
+  let settings = await getSettings();
+  console.log(settings)
+  if(settings && settings.length > 0 && settings[0].defaultStartDate && settings[0].defaultEndDate){
+    return [settings[0].defaultStartDate, settings[0].defaultEndDate];
+  }
+  return["2024-10-10","2024-11-11"];
+};
+
 export const compileMixture = ()=>{
 
 
-}
+};
 
 export const loadCalendarStyles = function(mixtures){
  
@@ -108,4 +118,4 @@ export const loadCalendarStyles = function(mixtures){
 
  
     }
-}
+};

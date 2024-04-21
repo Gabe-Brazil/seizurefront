@@ -1,5 +1,4 @@
 import moment from "moment";
-import { getFirstDate, getLastDate } from "../../API/Graph";
 
 export const generateDataSeries = (
   data,
@@ -19,12 +18,11 @@ export const generateDataSeries = (
 
 function generateDataSeries_ALL(data, start_date, end_date, mode) {
 
-  const START_DATE = start_date ? moment(start_date) : moment(getFirstDate().TimeOfSz)
-  const END_DATE = end_date ? moment(end_date) : moment(getLastDate().TimeOfSz)
+  const START_DATE = moment(start_date)
+  const END_DATE = moment(end_date)
   const DATASERIES = [];
   let iterations = END_DATE.diff(START_DATE, 'days') + 1; //Number of days between start and end
   //console.log(iterations)
-console.log(typeof mode, mode)
   switch (mode) {
   case '1':
     for (let i = 0; i <= iterations; i++){

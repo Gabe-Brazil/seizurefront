@@ -3,11 +3,8 @@ import HighchartsReact from "highcharts-react-official";
 import { getGraphData } from "../API/Graph.js";
 import { useEffect, useState } from "react";
 import Chartform from "./Chartform.jsx";
-
-import {
-  generateDataSeries,
-  generateTitle,
-} from "./helpers/largeChartsHelpers.js";
+import { getDates } from "../utils/functions.js";
+import { generateDataSeries,generateTitle,} from "./helpers/largeChartsHelpers.js";
 
 
 const defaultOptions={
@@ -67,16 +64,26 @@ const styles={
 
 
 function LargeChart() {
-  const [defaultDates, setDefaultDates] = useState(["2020-01-01","2020-12-31"]);
+  
 
   const [options, setOptions] = useState(null);
   const [params, setParams] = useState({
-    start_date: defaultDates[0],
-    end_date: defaultDates[1],
+    start_date: "",
+    end_date: "",
     mode: '1',
   });
 
+  const loadDefaultDates=async()=>{
+    let array=await getDates();
+    
+    setParams({...params,start_date:array[0],end_date:array[1]})
+  }
+  useEffect(()=>{
+   loadDefaultDates();
+  },[])
+
   useEffect(() => {
+
     loadGraphData();
   }, [params,]);
 
@@ -138,11 +145,3 @@ function LargeChart() {
 }
 
 export default LargeChart;
-
-/*
-Highcharts.addEvent(Highcharts.Point, 'click', function () {
-    
-  alert("click")
-
-});
-*/
