@@ -6,7 +6,7 @@ export const getSettings = async ()=>{
           Authorization: `Bearer ${token}`
         };
         
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/settings", { headers });
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + "settings", { headers });
         return response.data.rows;
       } catch (error) {
         console.error("Error getting data:", error);
@@ -24,7 +24,7 @@ export const updateSettings = async (params)=>{
     };
     
     
-    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "/settings",params ,{ headers });
+    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "settings",params ,{ headers });
     
     return response;
   } catch (error) {
