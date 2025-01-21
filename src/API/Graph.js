@@ -7,7 +7,7 @@ export const getGraphData = async (params)=>{
           Authorization: `Bearer ${token}`
         };
         
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/graph", { headers,params });
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + "graph", { headers,params });
         
         return response.data.result;
       } catch (error) {

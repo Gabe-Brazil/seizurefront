@@ -10,7 +10,7 @@ export const addRecord=async(data)=>{
       'Content-Type': 'application/json'
     }
   
-      await axios.post(process.env.REACT_APP_SERVER_URL+"/records/",data,{headers});
+      await axios.post(process.env.REACT_APP_SERVER_URL+"records/",data,{headers});
 
   }catch(err){
     throw new Error(err.message);
@@ -25,7 +25,7 @@ export const addRecord=async(data)=>{
       Authorization: `Bearer ${token}`
     };
 
-    const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/records", { headers,params });
+    const response = await axios.get(process.env.REACT_APP_SERVER_URL + "records", { headers,params });
     
     return response.data.newRows;
   } catch (error) {

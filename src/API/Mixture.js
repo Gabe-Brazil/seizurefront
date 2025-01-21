@@ -7,7 +7,7 @@ export const getMixturesWithComponents = async ()=>{
         };
         
         
-        const response = await axios.get(process.env.REACT_APP_SERVER_URL + "/MixtureComponent/withcomponents", { headers });
+        const response = await axios.get(process.env.REACT_APP_SERVER_URL + "MixtureComponent/withcomponents", { headers });
         
         return response.data;
       } catch (error) {
@@ -26,7 +26,7 @@ export const addMixturesWithComponents = async (data)=>{
       };
       
       console.log(headers)
-      const response = await axios.post(process.env.REACT_APP_SERVER_URL + "/MixtureComponent/withcomponents",data, { headers });
+      const response = await axios.post(process.env.REACT_APP_SERVER_URL + "MixtureComponent/withcomponents",data, { headers });
       
       return response.data;
     } catch (error) {
