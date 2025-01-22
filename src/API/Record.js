@@ -44,7 +44,7 @@ export const updateRecord = async (Id,data) => {
     };
       
    
-    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "/records/"+ Id,data, { headers });
+    const response = await axios.put(process.env.REACT_APP_SERVER_URL + "records/"+ Id,data, { headers });
     
     return response //may need to work on the return of update and delete function, MAYBE it doesnt matter and immediate effects will be frontend only
 
@@ -62,7 +62,7 @@ export const deleteRecord=async(id)=>{
       Authorization: `Bearer ${token}` // CRUCIAL ADDITION
     };
 
-    const response = await axios.delete(process.env.REACT_APP_SERVER_URL + "/records/" + id, { headers });
+    const response = await axios.delete(process.env.REACT_APP_SERVER_URL + "records/" + id, { headers });
     // console.log(response);
     return response
   } catch (error) {

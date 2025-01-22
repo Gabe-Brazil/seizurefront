@@ -51,6 +51,47 @@ function generateDataSeries_ALL(data, start_date, end_date, mode) {
   }
 }
 
+export function generateDataSeries_MIXTURE(mixtures, start_date, end_date){
+  const START_DATE = moment(start_date);
+  const END_DATE = moment(end_date);
+  const DATASERIES = [];
+
+
+  mixtures.forEach((mixture) => {
+    const startMixture = moment(mixture.start_date, "YYYY-MM-DD");
+    const endMixture = moment(mixture.end_date, "YYYY-MM-DD");
+
+    // Truncate mixture dates to fit within param date boundaries
+    const effectiveStart = moment.max(START_DATE, startMixture);
+    const effectiveEnd = moment.min(END_DATE, endMixture);
+
+    // Generate daily points if the mixture's effective range is valid
+    if (effectiveStart.isSameOrBefore(effectiveEnd)) {
+      const days = effectiveEnd.diff(effectiveStart, "days") + 1;
+
+      for (let i = 0; i < days; i++) {
+        const currentDate = effectiveStart.clone().add(i, "days");
+        //console.log(mixture)
+        DATASERIES.push({
+          x: Date.parse(currentDate.format("YYYY-MM-DD")), // Timestamp for Highcharts
+          y: 10, // Fixed value for visualization (e.g., 1 for presence)
+          name: mixture.id,
+          color: mixture.color, // Color from mixture data
+        });
+      }
+    }
+  });
+
+  return DATASERIES;
+}
+
+
+
+
+
+
+
+
 function getAverageLengthPerDay(current_date, data, DATASERIES) {
   let totalLength = 0;
   let count = 0;
