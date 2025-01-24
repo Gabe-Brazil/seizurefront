@@ -56,9 +56,9 @@ function Loginform ({ switchForm, user, setUser }) {
               {loading ? "Loading..." : "Submit"}
             </button>
           </div>
-          <p className="forgot-password text-right mt-2">
+         {/* <p className="forgot-password text-right mt-2">
             Forgot password? ADD IN THE FUTURE
-          </p>
+          </p> */}
           <p>
             Don't have an account Sign up{" "}
             <span onClick={switchForm} style={{ color: "blue" }}>

@@ -10,7 +10,7 @@ function AddMixtureForm({ onClose, selectedStartDate, selectedEndDate }) {
     start_date: selectedStartDate || "",
     end_date: selectedEndDate || "",
     color: "#000000",
-    components: [{ id: 1, medication: "A", dosage: 10 }],
+    components: [{ id: 1, medication: "", dosage: "" }],
   });
 
   const handleInputChange = (id, key, value) => {
@@ -36,7 +36,7 @@ function AddMixtureForm({ onClose, selectedStartDate, selectedEndDate }) {
       ...formData,
       components: [
         ...formData.components,
-        { id: newId, medication: "", dosage: 10 },
+        { id: newId, medication: "", dosage:"" },
       ],
     });
   };
@@ -108,7 +108,8 @@ function AddMixtureForm({ onClose, selectedStartDate, selectedEndDate }) {
                 {formData.components.map((medication) => (
                   <div key={medication.id} className="medication-item">
                     <Form.Control
-                      as="select"
+                      type="text"
+                      placeholder="Enter Medication Name"
                       value={medication.medication}
                       onChange={(e) =>
                         handleInputChange(
@@ -117,16 +118,11 @@ function AddMixtureForm({ onClose, selectedStartDate, selectedEndDate }) {
                           e.target.value
                         )
                       }
-                    >
-                      <option value="">Select Medication</option>
-                      <option value="Medication A">Medication A</option>
-                      <option value="Medication B">Medication B</option>
-                      <option value="Medication C">Medication C</option>
-                      {/* Add more options as needed */}
-                    </Form.Control>
+                    />
                     <Form.Control
                       type="number"
                       value={medication.dosage}
+                      placeholder="Daily dosage in MG"
                       onChange={(e) =>
                         handleInputChange(
                           medication.id,

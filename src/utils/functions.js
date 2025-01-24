@@ -4,6 +4,8 @@ export const generateId=()=>{
     return Math.floor(Math.random()*10000000000000)
 };
 
+const offsetMinutes = new Date().getTimezoneOffset();
+//const offsetHours = Math.floor(offsetMinutes / 60);
 export const compileRecord = ({duration,durationseconds,hours,mins, dayTime, type, date, features, fromPanic})=>{
 let result = {};
 
@@ -19,7 +21,7 @@ result.TypeOfSz= type;
 result.LengthOfSz= duration*60+durationseconds*1; //Length of Sz now in seconds
 result.FeaturesOfSz= features;
 result.fromPanic= fromPanic;
-
+result.offsetMinutes=offsetMinutes; //make part of database in the future
 return result
 };
 

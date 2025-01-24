@@ -8,6 +8,7 @@ import Statistics from "./Pages/Statistics"
 import Auth from './Components/Auth';
 import { Toaster } from "react-hot-toast"
 import MedicationCalendar from './Pages/MedicationCalendar';
+
 function App() {
   const [user,setUser]=useState({
     name:"",
@@ -23,6 +24,7 @@ function App() {
        ///connect to the server and check if the token is still valid
        
       setUser({...user,isLogIn:true})
+      
     }
 
   }, [])
@@ -35,7 +37,7 @@ function App() {
       <div><Toaster/></div>
 
       
-<NavbarComponent user={user} setUser={setUser}/>
+      {user&& user.isLogIn && <NavbarComponent user={user} setUser={setUser}/>}
 
 {user&& !user.isLogIn && <Auth user={user} setUser={setUser}/>}
 
