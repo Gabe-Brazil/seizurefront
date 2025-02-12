@@ -10,11 +10,11 @@ function InputBoard() {
           <Panicbutton />
           <Panicbuttonconfigure />
         </div>
-        <div className="ib-right-side">
-          <InputForm />
-        </div>
+          <div className="ib-right-side">
+            <InputForm />
+          </div>
       </div>
-      </div>
+    </div>
     );
   }
 

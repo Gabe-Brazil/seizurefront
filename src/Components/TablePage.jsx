@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getRecords } from '../API/Record';
 import {  decompileRecord} from "../utils/functions";
 import UpdateRecordForm from './UpdateRecordForm';
+import Button from "react-bootstrap/Button";
 const ID_COLUMN_WIDTH=50
 
 // TODO: Make a system to clean up table, Add an 'updating/editing feature'
@@ -65,7 +66,9 @@ const TABLENAMES = [
 ]
 
 const nextPage =()=> {
-setParams({...params,offset:params.offset+10}); 
+  if(rows.length>10){
+  setParams({...params,offset:params.offset+10}); 
+  }
 }
 
 const previousPage =()=> {
@@ -89,8 +92,10 @@ setLastClicked(index);
  
     return (
       <div> 
-        <button onClick={previousPage} > 10 back </button>
-        <button onClick={nextPage}> 10 forward </button>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <Button variant="secondary" onClick={previousPage} style={{padding: "10px 20px", margin: "0 10px",}}> 10 Seizures Back </Button>
+          <Button variant="secondary" onClick={nextPage} style={{padding: "10px 20px", margin: "0 10px",}}> 10 Seizures Forward </Button>
+        </div>
         {showForm && <UpdateRecordForm loadRecords={loadRecords} data = { selectedRecord} onClose={() => setShowForm(false)} />}
       <Table style={{border:"1px solid black",height:"100px",width:"80%",margin:"auto",marginTop:"20px"}} striped bordered hover>
         <thead>

@@ -14,6 +14,7 @@ function AddMixtureForm({ onClose, selectedStartDate, selectedEndDate }) {
   });
 
   const handleInputChange = (id, key, value) => {
+    console.log("Submitting Form Data:", formData);
     const updatedMedications = formData.components.map((medication) => {
       if (medication.id === id) {
         return { ...medication, [key]: value };

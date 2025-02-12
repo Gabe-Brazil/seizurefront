@@ -90,7 +90,7 @@ function InputForm() {
   /*do validation before submission*/
 
   return (
-    <div>
+    <div className="input-form">
       <h1>Record a Seizure</h1>
       <Form style={{ width: "300px" }} onSubmit={handleSubmit}>
         <Form.Label> Date of Seizure </Form.Label>

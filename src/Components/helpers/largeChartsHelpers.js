@@ -75,8 +75,8 @@ export function generateDataSeries_MIXTURE(mixtures, start_date, end_date){
         DATASERIES.push({
           x: Date.parse(currentDate.format("YYYY-MM-DD")), // Timestamp for Highcharts
           y: 10, // Fixed value for visualization (e.g., 1 for presence)
-          name: mixture.id,
-          color: mixture.color, // Color from mixture data
+          name: Date.parse(currentDate.format("YYYY-MM-DD")),
+           // Color from mixture data
         });
       }
     }

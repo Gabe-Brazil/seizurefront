@@ -75,23 +75,25 @@ export const compileMixture = ()=>{
 
 export const loadCalendarStyles = function(mixtures){
  
-    for(let {id,color,start_date,end_date} of mixtures){
+    for(let {id,color,start_date,end_date,components} of mixtures){
         const elements = document.querySelectorAll('.highlight'+id);
     
-
     if (elements) {
-
+    console.log(mixtures)
      for(let el of elements){
         //console.log("20px solid "+(color ? color:"black"))
       el.style.borderBottom ="20px solid "+(color ? color:"black")
       el.style.borderRight="10px solid white"
 
       let timeoutId;
+      //console.log(components[0].MedicationName)
+      let medicationNames = components.map(c=>c.MedicationName).join(", ")
+      console.log(medicationNames)
 
       const delayedFunction = () => {
-
+        // This sets up the tooltip to be displayed when hovering over the element
           const tileEl= document.getElementById("tile")
-          tileEl.innerHTML = `Start Date: ${start_date}<br>End Date: ${end_date}`;
+          tileEl.innerHTML = `${medicationNames} <br>Start Date: ${start_date}<br>End Date: ${end_date}`;
           tileEl.style.left = el.getBoundingClientRect().left+"px";
           tileEl.style.top= (el.getBoundingClientRect().top-105)+"px";
           tileEl.style.width =el.offsetWidth+"px"

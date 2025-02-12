@@ -1,15 +1,15 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { getGraphData } from "../API/Graph.js";
+import { getGraphData } from "../API/Graph";
 import { useEffect, useState } from "react";
 import Chartform from "./Chartform.jsx";
-import { getDates } from "../utils/functions.js";
+import { getDates } from "../utils/functions";
 import {
   generateDataSeries,
   generateTitle,
   generateDataSeries_MIXTURE,
 } from "./helpers/largeChartsHelpers.js";
-import { getMixturesWithComponents } from "../API/Mixture.js";
+import { getMixturesWithComponents } from "../API/Mixture";
 
 const defaultOptions = {
   chart: {
@@ -99,7 +99,8 @@ function LargeChart() {
       let data = await getGraphData(params);
       let mixtures = await getMixturesWithComponents();
       mixtures = mixtures.mixturesWithComponents;
-      //console.log(mixtures)
+      
+      
       if (data === undefined || data.length === 0) data = [0];
 
       const series = [
@@ -126,10 +127,9 @@ function LargeChart() {
           params.start_date,
           params.end_date
         );
-
         series.push({
           type: "line", // Render as line (dots + connecting lines)
-          name: `Mixture ${mixture.id}`, // Use mixture ID or another unique field as the name
+          name: `<b>Plan:</b> ${mixture.components[0].MedicationName}${mixture.components.length > 1 ? ` + ${mixture.components.length-1} more` : ""}`, // Use mixture ID or another unique field as the name
           data: mixtureData,
           color: mixture.color, // Assign the mixture's color
           lineWidth: 2,
@@ -139,6 +139,7 @@ function LargeChart() {
             symbol: 'square',
           },
           description: "sigma"
+          
         });
       });
 
@@ -149,6 +150,8 @@ function LargeChart() {
           text: generateTitle(params),
           align: "left",
         },
+        
+        
         series,
       });
     } catch (error) {
