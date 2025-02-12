@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Seizure Tracker",
+  "name": "Seizure Tracker",
   "icons": [
     {
       "src": "favicon.ico",
