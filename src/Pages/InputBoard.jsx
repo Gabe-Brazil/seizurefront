@@ -6,10 +6,10 @@ function InputBoard() {
     return (
     <div className='anim_gradient'>
       <div className="input-board-container">
-        <div className="ib-left-side">
+        {/*<div className="ib-left-side">
           <Panicbutton />
           <Panicbuttonconfigure />
-        </div>
+        </div>*/}
           <div className="ib-right-side">
             <InputForm />
           </div>
