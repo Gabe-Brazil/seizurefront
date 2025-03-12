@@ -73,52 +73,48 @@ export const compileMixture = ()=>{
 
 };
 
-export const loadCalendarStyles = function(mixtures){
- 
-    for(let {id,color,start_date,end_date,components} of mixtures){
-        const elements = document.querySelectorAll('.highlight'+id);
-    
-    if (elements) {
-    console.log(mixtures)
-     for(let el of elements){
-        //console.log("20px solid "+(color ? color:"black"))
-      el.style.borderBottom ="20px solid "+(color ? color:"black")
-      el.style.borderRight="10px solid white"
+export const loadCalendarStyles = function (mixtures) {
+  for (let { ID, color, start_date, end_date, components } of mixtures) {
+    const elements = document.querySelectorAll(".highlight" + ID);
+
+    if (elements.length === 0) continue; // Skip if no elements found
+
+    console.log(mixtures);
+
+    let medicationNames = components.map((c) => c.MedicationName).join(", ");
+    console.log(medicationNames);
+
+    elements.forEach((el) => {
+      el.style.borderBottom = `4px solid ${color || "black"}`; // Standard border size
+      el.style.borderRight = "2px solid white";
 
       let timeoutId;
-      //console.log(components[0].MedicationName)
-      let medicationNames = components.map(c=>c.MedicationName).join(", ")
-      console.log(medicationNames)
 
-      const delayedFunction = () => {
-        // This sets up the tooltip to be displayed when hovering over the element
-          const tileEl= document.getElementById("tile")
-          tileEl.innerHTML = `${medicationNames} <br>Start Date: ${start_date}<br>End Date: ${end_date}`;
-          tileEl.style.left = el.getBoundingClientRect().left+"px";
-          tileEl.style.top= (el.getBoundingClientRect().top-105)+"px";
-          tileEl.style.width =el.offsetWidth+"px"
-          tileEl.style.height =(el.offsetHeight+80)+"px"
-          tileEl.style.display="block"
-          el.style.borderBottom ="20px solid "+(color ? color:"black")
+      const showTooltip = () => {
+        const tileEl = document.getElementById("tile");
+        if (!tileEl) return;
+
+        const rect = el.getBoundingClientRect();
+        tileEl.innerHTML = `${medicationNames} <br>Start Date: ${start_date}<br>End Date: ${end_date}`;
+        tileEl.style.left = `${rect.left}px`;
+        tileEl.style.top = `${rect.top - 40}px`; // Adjusted for better positioning
+        tileEl.style.width = `${el.offsetWidth}px`;
+        tileEl.style.display = "block";
       };
 
-
-      el.addEventListener("mouseover",()=>{
+      const hideTooltip = () => {
+        const tileEl = document.getElementById("tile");
+        if (!tileEl) return;
+        tileEl.style.display = "none";
         clearTimeout(timeoutId);
-        timeoutId = setTimeout(delayedFunction, 1000);
-      })
+      };
 
-
-      el.addEventListener("mouseout",()=>{
-        const tileEl= document.getElementById("tile")
-        tileEl.style.display="none"
-        el.style.borderBottom ="20px solid "+(color ? color:"black")
+      el.addEventListener("mouseover", () => {
         clearTimeout(timeoutId);
-      })
-     }
-    
-  };
+        timeoutId = setTimeout(showTooltip, 500); // Slightly faster response
+      });
 
- 
-    }
+      el.addEventListener("mouseout", hideTooltip);
+    });
+  }
 };

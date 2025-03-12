@@ -46,16 +46,17 @@ function CalendarComponent() {
   
   const setClass = (date) => {
     const match = Mixture.find((obj) => {
-      const startDate = moment(obj.start_date);
-      const endDate = moment(obj.end_date);
-      return (moment(date).isBetween(startDate, endDate, null, '[]')); // '[]' includes start and end dates
+      const start_date = moment(obj.start_date);
+      const end_date = moment(obj.end_date);
+      return (moment(date).isBetween(start_date, end_date, null, '[]')); // '[]' includes start and end dates
     });
-    return match ? match.id : "";
+    
+    return match ? match.ID : "";
   };
 
   const tileClassName = ({ date }) => {
-    const id = setClass(date);
-    return id ? `highlight${id}` : "";
+    const ID = setClass(date);
+    return ID ? `highlight${ID}` : "";
   };
   
   const handleRefresh = () => {
